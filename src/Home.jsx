@@ -1,5 +1,11 @@
+import SearchForm from './SearchForm';
+
 const Home = () => {
-   return <h2>home component</h2>;
+   return (
+      <main>
+         <SearchForm />
+      </main>
+   );
 };
 
 export default Home;
