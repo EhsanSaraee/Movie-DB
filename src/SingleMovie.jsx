@@ -1,33 +1,9 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { API_ENDPOINT } from './context';
+import useFetch from './Hooks/useFetch';
 
 const SingleMovie = () => {
    const { id } = useParams();
-   const [movie, setMovie] = useState({});
-   const [isLoading, setIsLoading] = useState(true);
-   const [error, setError] = useState({ show: false, message: '' });
-
-   const fetchMovie = async (url) => {
-      try {
-         const { data } = await axios.get(url);
-         if (data.Response === 'False') {
-            setError({ show: true, message: data.Error });
-            setIsLoading(false);
-         } else {
-            setMovie(data);
-            setIsLoading(false);
-         }
-         setIsLoading(false);
-      } catch (error) {
-         console.log(error);
-      }
-   };
-
-   useEffect(() => {
-      fetchMovie(`${API_ENDPOINT}&i=${id}`);
-   }, [id]);
+   const { data: movie, error, isLoading } = useFetch(`&i=${id}`);
 
    if (isLoading) {
       return <div className="loading"></div>;
